@@ -1,6 +1,7 @@
 $( document ).ready(function() {
     topCharts();
     topArtists();
+    getLyric();
     console.log( "ready!" );
 });
 
@@ -35,11 +36,32 @@ function topArtists(){
         .done( ({data}) => {
             for (let i = 0; i < data.length - 1; i++) {
                 $(".top-artists").append(`
-                    <div class="col s4"><img src="${data[i].picture_medium}"></div>
+                    <div class="col s4">
+                        <img src="${data[i].picture_medium}">
+                        <p>${data[i].name}</p>
+                    </div>
                 `);
             }
         })
         .fail( err => {
             console.log(err);
         })
+}
+
+function getLyric(){
+    $.ajax({
+        url: 'http://localhost:3000/music/lyric',
+        method: 'GET',
+        params : {
+            artist : "Selena Gomez",
+            track: "Lose You To Love Me"
+        }
+    })
+    .done(({data}) => {
+        console.log('masuk sini')
+        console.log(data)
+    })
+    .fail(err => {
+        console.log(err)
+    })
 }

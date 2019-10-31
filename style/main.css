@@ -5,3 +5,7 @@ body {
 .top-charts {
     font-size: 20px;
 }
+
+.container {
+    padding-top: 80px;
+}
