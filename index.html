@@ -10,6 +10,7 @@
   <title>Lyrify</title>
 </head>
 <body>
+  <div class="navbar-fixed">
     <nav class="nav-extended">
       <div class="nav-wrapper">
         <a href="#" class="brand-logo center">LYRIFY</a>
@@ -23,24 +24,22 @@
 
       <div class="nav-content black">
         <ul class="tabs tabs-transparent">
-          <li class="tab"><a href="#test1">Top Charts</a></li>
-          <li class="tab"><a href="#test2">Top Artist</a></li>
+          <li class="tab"><a href="#charts">Top Charts</a></li>
+          <li class="tab"><a href="#artists">Top Artist</a></li>
         </ul>
       </div>
     </nav>
+  </div>
+    
     
     <div class="container">
-        <h1 class="center">TOP CHARTS</h1>
+        <h1 class="center" id="charts">TOP CHARTS</h1>
         <div class="top-charts">
         </div>
     
-        <h1 class="center">TOP ARTISTS</h1>
-        <div class="top-artists"></div>
+        <h1 class="center" id="artists">TOP ARTISTS</h1>
+        <div class="top-artists center row"></div>
     </div>
-
-
-   
-
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="scripts/main.js"></script>
