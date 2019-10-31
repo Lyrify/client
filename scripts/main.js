@@ -11,13 +11,15 @@ function topCharts(){
         .done( ({data} ) => {
             for (let music in data) {
                 $(".top-charts").append(`
-                    <li class="collection-item">
+                    <div class="section">
                         <div class="row">
                             <div class="col s2"><img src="${data[music].album.cover_small}"></div>
                             <div class="col s6">${data[music].title}</div>
                             <div class="col s2">${data[music].artist.name}</div>
                         </div>
-                    </li>
+                        <div class="divider"></div>
+                    </div>
+                  
                 `);
             }
         })
