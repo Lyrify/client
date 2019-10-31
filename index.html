@@ -4,9 +4,42 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style/main.css">
   <title>Lyrify</title>
 </head>
 <body>
-  
+    <nav class="nav-extended">
+      <div class="nav-wrapper">
+        <a href="#" class="brand-logo center">LYRIFY</a>
+        <form>
+            <div class="input-field s6 white-text left">
+              <input id="search" type="search" required>
+              <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+            </div>
+        </form>
+      </div>
+
+      <div class="nav-content black">
+        <ul class="tabs tabs-transparent">
+          <li class="tab"><a href="#test1">Top Charts</a></li>
+          <li class="tab"><a href="#test2">Top Artist</a></li>
+        </ul>
+      </div>
+    </nav>
+
+
+    <h1 class="center">TOP CHARTS</h1>
+    <div class="collection">
+      <ol class="top-charts"></ol>
+    </div>
+
+    <h1 class="center">TOP ARTISTS</h1>
+    <div class="top-artists"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="scripts/main.js"></script>
 </body>
 </html>
