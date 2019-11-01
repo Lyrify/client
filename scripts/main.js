@@ -1,3 +1,15 @@
+DZ.init({
+    appId  : '377484',
+    channelUrl : 'http://localhost:8080/channel.html',
+    player : {
+      container: 'player',
+      width : 900,
+      height : 100,
+      onload : function(){
+      }
+    }
+});
+
 $( document ).ready(function() {
     showHomepage();
     $('#modal1').modal();
@@ -15,7 +27,7 @@ function topCharts(){
             for (let music in data) {
                 $(".top-charts").append(`
                     <div class="section">
-                        <div class="row" onclick="getLyric('${data[music].artist.name}', '${data[music].title}', '${data[music].album.cover_medium}')">
+                        <div class="row" onclick="getLyric('${data[music].artist.name}', '${data[music].title}', '${data[music].album.cover_medium}', '${data[music].id}')">
                             <div class="col s1">${data[music].position}</div>
                             <div class="col s2"><img src="${data[music].album.cover_small}"></div>
                             <div class="col s5">${data[music].title}</div>
@@ -83,7 +95,7 @@ function topAlbums(){
             console.log(err);
         })
 }
-function getLyric(artist, track, artwork){
+function getLyric(artist, track, artwork, track_id){
     $.ajax({
         url: 'http://localhost:3000/music/lyric',
         method: 'GET',
@@ -93,6 +105,7 @@ function getLyric(artist, track, artwork){
         }
     })
     .done( data => {
+        DZ.player.playTracks([track_id]);
         let lyrics = data.lyrics_body;
         lyrics = lyrics.replace(/(?:\r\n|\r|\n)/g, '<br />');
         $(".homepage").hide();
