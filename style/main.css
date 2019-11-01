@@ -9,3 +9,20 @@ body {
 .container {
     padding-top: 80px;
 }
+
+nav .nav-wrapper form, nav .nav-wrapper form .input-field {
+    background-color: transparent;
+}
+
+.nav-wrapper .input-field input[type=search] {
+    height: auto;
+    padding-left: 8rem;
+}
+
+ul.tabs {
+    display : flex;
+}
+
+li.tab {
+   flex-basis : 33.33%;
+}
