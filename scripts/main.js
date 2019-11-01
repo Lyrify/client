@@ -1,11 +1,12 @@
 $( document ).ready(function() {
+    showHomepage();
     $('#modal1').modal();
     $("#showDetectedLanguage").hide();
     topCharts();
     topArtists();
+    topAlbums();
     console.log( "ready!" );
 });
-
 function topCharts(){
     $.ajax('http://localhost:3000/music/top-musics', {
         method: 'GET'
@@ -14,7 +15,7 @@ function topCharts(){
             for (let music in data) {
                 $(".top-charts").append(`
                     <div class="section">
-                        <div class="row" onclick="getLyric('${data[music].artist.name}', '${data[music].title}')">
+                        <div class="row" onclick="getLyric('${data[music].artist.name}', '${data[music].title}', '${data[music].album.cover_medium}')">
                             <div class="col s1">${data[music].position}</div>
                             <div class="col s2"><img src="${data[music].album.cover_small}"></div>
                             <div class="col s5">${data[music].title}</div>
@@ -29,59 +30,60 @@ function topCharts(){
             console.log(err);
         })
 }
-
 function topArtists(){
     $.ajax('http://localhost:3000/music/top-artists', {
         method: 'GET'
     })
         .done( ({data}) => {
             for (let i = 0; i < data.length - 1; i++) {
+                let name = data[i].name;
+                let artwork = data[i].picture_medium
                 $(".top-artists").append(`
-                    <div class="col s4" onclick="showModal()">
-                        <img src="${data[i].picture_medium}">
-                        <p>${data[i].name}</p>
+                    <div class="col s4" onclick="showModal('${name}', '${artwork}')">
+                        <img src="${artwork}">
+                        <p>${name}</p>
                     </div>
                 `);
-
-                $(".modal-content").empty()
-                $(".modal-content").append(`
-                    <h3>${data[i].name}</h3>
-                    <img src="${data[i].picture_medium}">
-                `);
             }
-            
         })
         .fail( err => {
             console.log(err);
         })
 }
-
-function showModal() {
+function showModal(title, artwork) {
+    console.log(title, artwork)
+    $(".modal-content").empty()
+    $(".modal-content").append(`
+        <h3>${title}</h3>
+        <img src="${artwork}">
+    `);
     $('#modal1').modal('open');
 }
-
 function showHomepage() {
     $(".homepage").show();
     $(".lyric-page").hide();
 }
-
-// function topAlbums(){
-//     $.ajax('http://localhost:3000/music/top-albums', {
-//         method: 'GET'
-//     })
-//         .done( ({data}) => {
-//             for (let album in data) {
-               
-//                 // console.log(data[album].title)
-//             }
-//             // console.log(data)
-//         })
-//         .fail( err => {
-//             console.log(err);
-//         })
-// }
-
-function getLyric(artist, track){
+function topAlbums(){
+    $.ajax('http://localhost:3000/music/top-albums', {
+        method: 'GET'
+    })
+        .done( ({data}) => {
+            for (let i = 0; i < data.length - 1; i++) {
+                let title = data[i].title;
+                let artwork = data[i].cover_medium;
+                $(".top-albums").append(`
+                    <div class="col s4" onclick="showModal('${title}', '${artwork}')">
+                        <img src="${artwork}">
+                        <p>${title}</p>
+                    </div>
+                `);
+            }
+        })
+        .fail( err => {
+            console.log(err);
+        })
+}
+function getLyric(artist, track, artwork){
     $.ajax({
         url: 'http://localhost:3000/music/lyric',
         method: 'GET',
@@ -101,12 +103,16 @@ function getLyric(artist, track){
                 ${lyrics}
             </div>
         `);
-        // $(".translation-section ").append(`
-        //     <div>
-        //         translation lyrics here
-        //     </div>
-        // `);
-
+        console.log(data)
+        $(".lyric-header").append(`
+            <div class="col s2">
+                <img src="${artwork}" class="artwork-lyric">
+            </div>
+            <div class="col s8">
+                <h3>${track}</h3>
+                <h5>${artist}</h5>
+            </div>
+        `);
         $(".lyric-page").show();
         detectLanguage(lyrics);
         getTranslatedLyrics(lyrics);
@@ -116,7 +122,6 @@ function getLyric(artist, track){
     })
 }
 function getTranslatedLyrics(str) {
-    // let text = $(".lyric-section").text();
     //let translateTo = $("#translateForm option:selected").text();
     $.ajax({
         method: 'POST',
@@ -128,9 +133,8 @@ function getTranslatedLyrics(str) {
     })
         .done( (translatedLyrics) => {
             translatedLyrics = translatedLyrics.replace(/(?:\r\n|\r|\n)/g, '<br />');
-            console.log(translatedLyrics)
             $(".translation-section").empty().append(`
-                <p> ${ translatedLyrics } </p>
+                ${ translatedLyrics }
             `);
             }
         )
@@ -148,7 +152,6 @@ function detectLanguage(text) {
         data: { "text": text }
     })
         .done( (language) => {
-            console.log(language)
             $("#showDetectedLanguage").empty().append(`
                 ${ language }
             `);

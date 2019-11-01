@@ -26,3 +26,7 @@ ul.tabs {
 li.tab {
    flex-basis : 33.33%;
 }
+
+.artwork-lyric {
+    height: 120px;
+}

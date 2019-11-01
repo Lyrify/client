@@ -14,25 +14,26 @@
     <nav class="nav-extended">
       <div class="nav-wrapper">
         <a href="#" class="brand-logo center" onclick="showHomepage()">LYRIFY</a>
-        <form>
+        <!-- <form>
             <div class="input-field s6 white-text left">
               <input id="search" type="search" required>
               <label class="label-icon" for="search"><i class="material-icons">search</i></label>
             </div>
-        </form>
+        </form> -->
       </div>
 
       <div class="nav-content black">
         <ul class="tabs tabs-transparent">
-          <li class="tab"><a href="#charts">Top Charts</a></li>
-          <li class="tab"><a href="#artists">Top Artist</a></li>
-          <li class="tab"><a href="#artists">Top Albums</a></li>
+          <li class="tab"><a href="#charts" onclick="showHomepage()">Top Charts</a></li>
+          <li class="tab"><a href="#artists" onclick="showHomepage()">Top Artist</a></li>
+          <li class="tab"><a href="#albums" onclick="showHomepage()">Top Albums</a></li>
         </ul>
       </div>
     </nav>
   </div>
 
   <div class="lyric-page container">
+    <div class="row lyric-header"></div>
     <div class="row">
         <h4 id="showDetectedLanguage"></h4>
         <div class="lyric-section col s6"></div>
@@ -59,6 +60,9 @@
   
       <h1 class="center" id="artists">TOP ARTISTS</h1>
       <div class="top-artists center row"></div>
+
+      <h1 class="center" id="albums">TOP ALBUMS</h1>
+      <div class="top-albums center row"></div>
     </div>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
