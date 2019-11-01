@@ -1,8 +1,8 @@
 $( document ).ready(function() {
     $('#modal1').modal();
+    $("#showDetectedLanguage").hide();
     topCharts();
     topArtists();
-    // topAlbums();
     console.log( "ready!" );
 });
 
@@ -101,17 +101,60 @@ function getLyric(artist, track){
                 ${lyrics}
             </div>
         `);
-        $(".translation-section ").append(`
-            <div>
-                translation lyrics here
-            </div>
-        `);
+        // $(".translation-section ").append(`
+        //     <div>
+        //         translation lyrics here
+        //     </div>
+        // `);
 
         $(".lyric-page").show();
-        
-        console.log(data)
+        detectLanguage(lyrics);
+        getTranslatedLyrics(lyrics);
     })
     .fail(err => {
         console.log(err)
     })
+}
+function getTranslatedLyrics(str) {
+    // let text = $(".lyric-section").text();
+    //let translateTo = $("#translateForm option:selected").text();
+    $.ajax({
+        method: 'POST',
+        url: 'http://localhost:3000/translate',
+        headers: {
+            "authorization": localStorage.getItem('jwt_token')
+        },
+        data: { "text": str, "translateTo": "id" }
+    })
+        .done( (translatedLyrics) => {
+            translatedLyrics = translatedLyrics.replace(/(?:\r\n|\r|\n)/g, '<br />');
+            console.log(translatedLyrics)
+            $(".translation-section").empty().append(`
+                <p> ${ translatedLyrics } </p>
+            `);
+            }
+        )
+        .fail( err => {
+            console.log(err);
+        })
+}
+function detectLanguage(text) {
+    $.ajax({
+        method: 'POST',
+        url: 'http://localhost:3000/translate/detectlanguage',
+        headers: {
+            "authorization": localStorage.getItem('jwt_token')
+        },
+        data: { "text": text }
+    })
+        .done( (language) => {
+            console.log(language)
+            $("#showDetectedLanguage").empty().append(`
+                ${ language }
+            `);
+            }
+        )
+        .fail( err => {
+            console.log(err);
+        })
 }
